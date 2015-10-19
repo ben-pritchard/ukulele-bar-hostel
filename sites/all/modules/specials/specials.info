@@ -1,0 +1,5 @@
+name = Specials
+description = Displays the drink specials.
+package = Epicodus practice modules
+core = 7.x
+files[] = specials.module

@@ -1,0 +1,24 @@
+<?php
+
+    function specials_menu()
+    {
+        $items = array();
+        $items['daily_specials'] = array(
+            'title' => 'Daily Specials',
+            'page callback' => 'display_specials',
+            'access callback' => TRUE,
+            'type' => MENU_NORMAL_ITEM,
+        );
+        return $items;
+    }
+
+    function display_specials()
+    {
+        return '
+            <ul>
+                <li>Pina Colada: $6</li>
+                <li>Memosa: $7</li>
+                <li>Big fruity drink with an umbrella: $12</li>
+            </ul>
+        ';
+    }
