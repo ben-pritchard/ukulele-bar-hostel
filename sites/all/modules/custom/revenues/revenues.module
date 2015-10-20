@@ -36,7 +36,7 @@
         );
         $rooms_booked['hammock'] = array(
             'price' => 15,
-            'quantity' => 9,
+            'quantity' => 10,
         );
 
         $output = "";

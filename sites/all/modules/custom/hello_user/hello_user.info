@@ -1,0 +1,5 @@
+name = Hello new user
+description = Bring new user to a success page
+package = Epicodus practice modules
+core = 7.x
+files[] = hello_user.module
