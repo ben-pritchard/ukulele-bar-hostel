@@ -38,9 +38,18 @@
             'price' => 15,
             'quantity' => 9,
         );
-        $hello = "hello";
+
+        $output = "";
+        $total = null;
+        foreach ($rooms_booked as $room_type => $info) {
+            $room_type_revenue = $info['price'] * $info['quantity'];
+            $total += $room_type_revenue;
+            $output .= $room_type.': $'.$room_type_revenue.'<br>';
+        }
+
         return '
-            <h1>Revenue for 6-25-2015</h1>
-            <p>beans'.$rooms_booked.'</p>
+            <h1>By room type:</h1>
+            <p>'.$output.'</p>
+            <h2>Total: $'.$total.'</h2>
         ';
     }
