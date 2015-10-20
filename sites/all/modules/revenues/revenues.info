@@ -1,0 +1,5 @@
+name = Revenues
+description = Log of daily revenues.
+package = Epicodus practice modules
+core = 7.x
+files[] = revenues.module

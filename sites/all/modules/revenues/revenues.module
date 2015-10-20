@@ -1,0 +1,46 @@
+<?php
+
+    function revenues_menu()
+    {
+        $items = array();
+        $items['revenues/6-25-2015'] = array(
+            'title' => 'Revenue for 6-25-2015',
+            'page callback' => 'display_revenue',
+            'access callback' => TRUE,
+            'type' => MENU_NORMAL_ITEM,
+        );
+        return $items;
+    }
+
+    function display_revenue()
+    {
+        $rooms_booked['dorm_beds'] = array(
+            'price' => 20,
+            'quantity' => 16,
+        );
+        $rooms_booked['honeymoon_suite'] = array(
+            'price' => 100,
+            'quantity' => 2,
+        );
+        $rooms_booked['private_single'] = array(
+            'price' => 40,
+            'quantity' => 4,
+        );
+        $rooms_booked['private_double'] = array(
+            'price' => 80,
+            'quantity' => 4,
+        );
+        $rooms_booked['private_quad'] = array(
+            'price' => 160,
+            'quantity' => 4,
+        );
+        $rooms_booked['hammock'] = array(
+            'price' => 15,
+            'quantity' => 9,
+        );
+        $hello = "hello";
+        return '
+            <h1>Revenue for 6-25-2015</h1>
+            <p>beans'.$rooms_booked.'</p>
+        ';
+    }
