@@ -1,0 +1,5 @@
+name = Comment Buddy
+description = Show notices during comment CRUDs
+package = Epicodus practice modules
+core = 7.x
+files[] = comment_buddy.module
