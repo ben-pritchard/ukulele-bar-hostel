@@ -1,0 +1,67 @@
+<?php
+
+function user_greeting_menu()
+{
+    $items = array();
+    $items['hello_friend'] = array(
+        'title' => 'Hello Friend',
+        'page callback' => 'say_hello',
+        'access callback' => True,
+        'type' => MENU_CALLBACK,
+    );
+    $items['farewell'] = array(
+        'title' => 'Goodbye dear friend',
+        'page callback' => 'say_farewell',
+        'access callback' => True,
+        'type' => MENU_CALLBACK,
+    );
+    $items['farewell_admin'] = array(
+        'title' => 'Goodbye awesome Mr. Administrator',
+        'page callback' => 'say_farewell_admin',
+        'access callback' => True,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function say_hello()
+{
+    global $user;
+    if (in_array('administrator', $user->roles)) {
+        return '
+            <h3>Hello there Mr. Administrator friend, welcome back!</h3>
+        ';
+    } else {
+        return '
+            <h3>Welcome back regular old authenticated user!</h3>
+        ';
+    }
+}
+
+function say_farewell()
+{
+    return '
+        <h3>Hurry back now regular old authenticated user!</h3>
+    ';
+}
+
+function say_farewell_admin()
+{
+    return '
+        <h3>Hurry back now awesome Mr. Administrator! Who knows what people will have broken.</h3>
+    ';
+}
+
+function user_greeting_user_login()
+{
+    $_GET['destination'] = 'hello_friend';
+}
+
+function user_greeting_user_logout($account)
+{
+    if (in_array('administrator', $account->roles)) {
+        $_GET['destination'] = 'farewell_admin';
+    } else {
+        $_GET['destination'] = 'farewell';
+    }
+}

@@ -1,0 +1,5 @@
+name = User greeting
+description = Greet the user by user type when logging in or out.
+package = Epicodus practice modules
+core = 7.x
+files[] = greeing.module

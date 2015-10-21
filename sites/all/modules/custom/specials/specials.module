@@ -14,8 +14,29 @@
 
     function display_specials()
     {
+        global $user;
+        $num = count($user->roles);
+        $keys = null;
+        $values = null;
+        $account_keys = null;
+        $account_values = null;
+        foreach($user->roles as $key=>$value){
+            $keys .= $key." ";
+            $values .= $value." ";
+        }
+        foreach($account as $key=>$value){
+            $account_keys .= $key." ";
+            $account_values .= $value." ";
+        }
         return '
             <ul>
+                <li>uid: '.$user->uid.'</li>
+                <li>user name: '.$user->name.'</li>
+                <li>number of roles: '.$num.'</li>
+                <li>user keys: '.$keys.'</li>
+                <li>user values: '.$values.'</li>
+                <li>account keys: '.$account_keys.'</li>
+                <li>account values: '.$account_values.'</li>
                 <li>Pina Colada: $6</li>
                 <li>Memosa: $7</li>
                 <li>Big fruity drink with an umbrella: $12</li>
