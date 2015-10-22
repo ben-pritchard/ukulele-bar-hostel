@@ -10,6 +10,13 @@ function rps_menu()
         'access callback' => TRUE,
         'type' => MENU_NORMAL_ITEM,
     );
+    $items['rock-paper-scissors-2'] = array(
+        'title' => 'Rock Paper Scissors',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('player2_form'),
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
     $items['rock-paper-scissors-results'] = array(
         'title' => 'Results',
         'page callback' => 'show_winner',
@@ -22,7 +29,23 @@ function rps_menu()
 function player1_form()
 {
     $form['player1_weapon'] = array(
-        '#title' => 'Player 1 chooses a weapon',
+        '#title' => 'Player 1, choose a weapon',
+        '#description' => t('Enter either "rock", "paper", or "scissors".'),
+        '#type' => 'textfield',
+        '#element_validate' => array('element_validate_weapon'),
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Shoot!',
+    );
+    return $form;
+}
+
+function player2_form()
+{
+    $form['player2_weapon'] = array(
+        '#title' => 'Player 2, choose a weapon',
         '#description' => t('Enter either "rock", "paper", or "scissors".'),
         '#type' => 'textfield',
         '#element_validate' => array('element_validate_weapon'),
@@ -46,11 +69,32 @@ function element_validate_weapon($element)
 function player1_form_submit($form, &$form_state)
 {
     $_SESSION['player1_weapon'] = $form_state['values']['player1_weapon'];
+    $form_state['redirect'] = 'rock-paper-scissors-2';
+}
+
+function player2_form_submit($form, &$form_state)
+{
+    $_SESSION['player2_weapon'] = $form_state['values']['player2_weapon'];
     $form_state['redirect'] = 'rock-paper-scissors-results';
 }
 
 function show_winner()
 {
-    $output = '<p>'.$_SESSION['player1_weapon'].'</p>';
+    $player1_weapon = $_SESSION['player1_weapon'];
+    $player2_weapon = $_SESSION['player2_weapon'];
+
+    if ($player1_weapon == $player2_weapon) {
+        $winner = 'Cat\'s game!';
+    } elseif (($player1_weapon == 'rock' && $player2_weapon == 'paper') ||
+        ($player1_weapon == 'paper' && $player2_weapon == 'scissors') ||
+        ($player1_weapon == 'scissors' && $player2_weapon == 'rock')) {
+            $winner = 'player 2';
+    } else {
+        $winner = 'player 1';
+    }    
+
+    $output = '<p>Player 1 chose: '.$player1_weapon.'</p>';
+    $output .= '<p>Player 2 chose: '.$player2_weapon.'</p>';
+    $output .= '<p>And the winner is: '.$winner.'</p>';
     return $output;
 }
