@@ -1,0 +1,56 @@
+<?php
+
+function rps_menu()
+{
+    $items = array();
+    $items['rock-paper-scissors'] = array(
+        'title' => 'Rock Paper Scissors',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('player1_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['rock-paper-scissors-results'] = array(
+        'title' => 'Results',
+        'page callback' => 'show_winner',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function player1_form()
+{
+    $form['player1_weapon'] = array(
+        '#title' => 'Player 1 chooses a weapon',
+        '#description' => t('Enter either "rock", "paper", or "scissors".'),
+        '#type' => 'textfield',
+        '#element_validate' => array('element_validate_weapon'),
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Shoot!',
+    );
+    return $form;
+}
+
+function element_validate_weapon($element)
+{
+    $weapon = $element['#value'];
+    if (!(($weapon == 'rock') || ($weapon == 'paper') || ($weapon == 'scissors'))) {
+        form_error($element, t('You need to enter either "rock", "paper", or "scissors" as your weapon.'));
+    }
+}
+
+function player1_form_submit($form, &$form_state)
+{
+    $_SESSION['player1_weapon'] = $form_state['values']['player1_weapon'];
+    $form_state['redirect'] = 'rock-paper-scissors-results';
+}
+
+function show_winner()
+{
+    $output = '<p>'.$_SESSION['player1_weapon'].'</p>';
+    return $output;
+}

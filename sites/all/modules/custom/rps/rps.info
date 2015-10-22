@@ -1,0 +1,5 @@
+name = Rock Paper Scissors
+description = Play Rock Paper Scissors with another player
+package = Epicodus practice modules
+core = 7.x
+files[] = rps.module
