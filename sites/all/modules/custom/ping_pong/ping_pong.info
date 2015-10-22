@@ -1,0 +1,5 @@
+name = Ping Pong!
+description = Counts up to a given number, with multiples of 3 replaced with "ping", multiples of 5 replaced with "pong", and numbers that are multiples of both 3 and 5 will be replaced with "ping-pong"
+package = Epicodus practice modules
+core = 7.x
+files[] = ping_pong.module

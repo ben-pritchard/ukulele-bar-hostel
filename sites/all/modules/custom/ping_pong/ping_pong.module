@@ -1,0 +1,72 @@
+<?php
+
+function ping_pong_menu()
+{
+    $items = array();
+    $items['ping-pong'] = array(
+        'title' => 'Ping Pong Exercise',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('ping_pong_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['ping-pong-display'] = array(
+        'title' => 'Ping Pong Displayed',
+        'page callback' => 'ping_pong_result',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function ping_pong_form()
+{
+    $form['ping_pong'] = array(
+        '#title' => 'Choose your ping-pong destiny',
+        '#type' => 'textfield',
+        '#description' => t('What number would you like to ping-pong up to?'),
+        '#element_validate' => array('element_validate_integer_positive', 'element_validate_max_100'),
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Serve it up!',
+    );
+    return $form;
+}
+
+function element_validate_max_100($element)
+{
+    if ($element['#value'] > 100) {
+        form_error($element, t('Let\'s ping pong to something less than 100.'));
+    }
+}
+
+function ping_pong_form_submit($form, &$form_state)
+{
+    $output = array();
+    $ping_pong = $form_state['values']['ping_pong'];
+    for($i = 1; $i <= $ping_pong; $i++) {
+        if (($i % 3 == 0) && ($i % 5 == 0)) {
+            array_push($output, 'ping-pong');
+        } elseif ($i % 3 == 0) {
+            array_push($output, 'ping');
+        } elseif ($i % 5 == 0) {
+            array_push($output, 'pong');
+        } else {
+            array_push($output, $i);
+        }
+    }
+    $_SESSION['ping_pong_output'] = $output;
+    $form_state['redirect'] = 'ping-pong-display';
+}
+
+function ping_pong_result()
+{
+    $output = '<ul>';
+    foreach($_SESSION['ping_pong_output'] as $element) {
+        $output .= '<li>'.$element.'</li>';
+    }
+    $output .= '</ul>';
+    return $output;
+}
