@@ -1,0 +1,55 @@
+<?php
+
+function sum_menu()
+{
+    $items = array();
+    $items['sumitup'] = array(
+        'title' => "You've reached the SUMit app",
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('sum_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['sum_answer_page'] = array(
+        'title' => 'Answer page',
+        'page callback' => 'sum_success',
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    return $items;
+}
+
+function sum_form()
+{
+    $form['first_number'] = array(
+        '#title' => 'First number',
+        '#type' => 'textfield',
+        '#description' => t('What is your starting number?'),
+    );
+
+    $form['second_number'] = array(
+        '#title' => 'Second number',
+        '#type' => 'textfield',
+        '#description' => t('What number would you like to add to your starting number?'),
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'SUMit up!',
+    );
+
+    return $form;
+}
+
+function sum_form_submit($form, &$form_state)
+{
+    $first_number = $form_state['values']['first_number'];
+    $second_number = $form_state['values']['second_number'];
+    $_SESSION['sum_output'] = $first_number + $second_number;
+    $form_state['redirect'] = 'sum_answer_page';
+}
+
+function sum_success()
+{
+    return 'The answer is: '.$_SESSION['sum_output'];
+}
