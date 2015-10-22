@@ -1,0 +1,5 @@
+name = Queen Attack
+description = Two chess board coordinates are entered and after validation checks, the program will determine if the queen can attack the other piece.
+package = Epicodus practice modules
+core = 7.x
+files[] = queen_attack.module
