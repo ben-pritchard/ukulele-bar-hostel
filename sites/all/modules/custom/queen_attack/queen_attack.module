@@ -56,19 +56,11 @@ function coordinates_form()
     return $form;
 }
 
-function intelligence_report()
+function coordinates_form_validate($form, &$form_state)
 {
-    $queen_x = $_SESSION['queen_x'];
-    $queen_y = $_SESSION['queen_y'];
-    $target_x = $_SESSION['target_x'];
-    $target_y = $_SESSION['target_y'];
-
-    return '
-        <p>Queen "X" coordinate: '.$queen_x.'</p>
-        <p>Queen "Y" coordinate: '.$queen_y.'</p>
-        <p>Target "X" coordinate: '.$target_x.'</p>
-        <p>Target "Y" coordinate: '.$target_y.'</p>
-    ';
+    if (($form_state['values']['queen_x'] == $form_state['values']['target_x']) && ($form_state['values']['queen_y'] == $form_state['values']['target_y'])) {
+        form_set_error('queen_x', "Queen and Target need to be on different squares.");
+    }
 }
 
 function element_validate_coordinate($element)
@@ -81,9 +73,38 @@ function element_validate_coordinate($element)
 
 function coordinates_form_submit($form, &$form_state)
 {
+    $queen_x = $form_state['values']['queen_x'];
+    $queen_y = $form_state['values']['queen_y'];
+    $target_x = $form_state['values']['target_x'];
+    $target_y = $form_state['values']['target_y'];
+    $attack_ability = null;
+
+    if (($queen_x == $target_x) || ($queen_y == $target_y) || (abs($queen_x - $target_x) == abs($queen_y - $target_y))) {
+        $attack_ability = "CAN";
+    } else {
+        $attack_ability = "CANNOT";
+    }
+
     $_SESSION['queen_x'] = $form_state['values']['queen_x'];
     $_SESSION['queen_y'] = $form_state['values']['queen_y'];
     $_SESSION['target_x'] = $form_state['values']['target_x'];
     $_SESSION['target_y'] = $form_state['values']['target_y'];
+    $_SESSION['attack_ability'] = $attack_ability;
     $form_state['redirect'] = 'queen_attack_intelligence_report';
+}
+
+function intelligence_report()
+{
+    $queen_x = $_SESSION['queen_x'];
+    $queen_y = $_SESSION['queen_y'];
+    $target_x = $_SESSION['target_x'];
+    $target_y = $_SESSION['target_y'];
+
+    return '
+        <p>Queen "X" coordinate: '.$queen_x.'</p>
+        <p>Queen "Y" coordinate: '.$queen_y.'</p>
+        <p>Target "X" coordinate: '.$target_x.'</p>
+        <p>Target "Y" coordinate: '.$target_y.'</p>
+        <h3>The Queen '.$_SESSION['attack_ability'].' attack the Target!</h3>
+    ';
 }
