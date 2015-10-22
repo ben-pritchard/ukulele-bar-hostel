@@ -14,7 +14,7 @@ function sum_menu()
         'title' => 'Answer page',
         'page callback' => 'sum_success',
         'access callback' => TRUE,
-        'type' => MENU_NORMAL_ITEM,
+        'type' => MENU_CALLBACK,
     );
     return $items;
 }
@@ -25,12 +25,16 @@ function sum_form()
         '#title' => 'First number',
         '#type' => 'textfield',
         '#description' => t('What is your starting number?'),
+        '#element_validate' => array('element_validate_number'),
+        '#required' => TRUE,
     );
 
     $form['second_number'] = array(
         '#title' => 'Second number',
         '#type' => 'textfield',
         '#description' => t('What number would you like to add to your starting number?'),
+        '#element_validate' => array('element_validate_number'),
+        '#required' => TRUE,
     );
 
     $form['submit'] = array(
