@@ -1,0 +1,89 @@
+<?php
+
+function queen_attack_menu()
+{
+    $items = array();
+    $items['queen_attack'] = array(
+        'title' => 'Queen Attack: can the Queen attack the Target?',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('coordinates_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+    $items['queen_attack_intelligence_report'] = array(
+        'title' => 'Intelligence Report',
+        'page callback' => 'intelligence_report',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+    return $items;
+}
+
+function coordinates_form()
+{
+    $form['queen_x'] = array(
+        '#title' => 'Queen "X" coordinate:',
+        '#description' => t('Enter a number between 1-8 for the Queen\'s "X" coordinate'),
+        '#type' => 'textfield',
+        '#element_validate' => array('element_validate_integer_positive', 'element_validate_coordinate'),
+        '#required' => TRUE,
+    );
+    $form['queen_y'] = array(
+        '#title' => 'Queen "Y" coordinate:',
+        '#description' => t('Enter a number between 1-8 for the Queen\'s "Y" coordinate'),
+        '#type' => 'textfield',
+        '#element_validate' => array('element_validate_integer_positive', 'element_validate_coordinate'),
+        '#required' => TRUE,
+    );
+    $form['target_x'] = array(
+        '#title' => 'Target "X" coordinate:',
+        '#description' => t('Enter a number between 1-8 for the Target\'s "X" coordinate'),
+        '#type' => 'textfield',
+        '#element_validate' => array('element_validate_integer_positive', 'element_validate_coordinate'),
+        '#required' => TRUE,
+    );
+    $form['target_y'] = array(
+        '#title' => 'Target "Y" coordinate:',
+        '#description' => t('Enter a number between 1-8 for the Target\'s "Y" coordinate'),
+        '#type' => 'textfield',
+        '#element_validate' => array('element_validate_integer_positive', 'element_validate_coordinate'),
+        '#required' => TRUE,
+    );
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Gather intel',
+    );
+    return $form;
+}
+
+function intelligence_report()
+{
+    $queen_x = $_SESSION['queen_x'];
+    $queen_y = $_SESSION['queen_y'];
+    $target_x = $_SESSION['target_x'];
+    $target_y = $_SESSION['target_y'];
+
+    return '
+        <p>Queen "X" coordinate: '.$queen_x.'</p>
+        <p>Queen "Y" coordinate: '.$queen_y.'</p>
+        <p>Target "X" coordinate: '.$target_x.'</p>
+        <p>Target "Y" coordinate: '.$target_y.'</p>
+    ';
+}
+
+function element_validate_coordinate($element)
+{
+    $coordinate = $element['#value'];
+    if (($coordinate < 1) || ($coordinate > 8)) {
+        form_error($element, t('Coordinates need to be in the range 1-8'));
+    }
+}
+
+function coordinates_form_submit($form, &$form_state)
+{
+    $_SESSION['queen_x'] = $form_state['values']['queen_x'];
+    $_SESSION['queen_y'] = $form_state['values']['queen_y'];
+    $_SESSION['target_x'] = $form_state['values']['target_x'];
+    $_SESSION['target_y'] = $form_state['values']['target_y'];
+    $form_state['redirect'] = 'queen_attack_intelligence_report';
+}
