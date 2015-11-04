@@ -1,0 +1,15 @@
+QUESTIONS:
+
+Why does "Answer Page" show up in the Navigation menu even though it's labeled as MENU_CALLBACK in the sum module?
+
+
+
+
+
+BREWPAL:
+
+Idea for getting used to submitting patch requests:
+
+- Put module code into a coding standard checker (maybe through Coder module or through "atom drupal package")
+- Submit an issue
+- Submit the patch with the improved coding standards!
