@@ -84,7 +84,6 @@ function coordinates_form_submit($form, &$form_state)
     $_SESSION['queen_y'] = $form_state['values']['queen_y'];
     $_SESSION['target_x'] = $form_state['values']['target_x'];
     $_SESSION['target_y'] = $form_state['values']['target_y'];
-    $_SESSION['attack_ability'] = $attack_ability;
 
     $form_state['redirect'] = 'queen_attack_intelligence_report';
 }
@@ -93,12 +92,12 @@ function determine_line_of_sight($queen_x, $queen_y, $target_x, $target_y) {
 
     $attack_ability = null;
     if (($queen_x == $target_x) || ($queen_y == $target_y) || (abs($queen_x - $target_x) == abs($queen_y - $target_y))) {
-        $attack_ability = "CAN";
+        $_SESSION['attack_ability'] = "CAN";
+        return TRUE;
     } else {
-        $attack_ability = "CANNOT";
+        $_SESSION['attack_ability'] = "CANNOT";
+        return FALSE;
     }
-
-    return $attack_ability;
 }
 
 function intelligence_report()

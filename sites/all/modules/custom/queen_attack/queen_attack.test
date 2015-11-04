@@ -1,0 +1,29 @@
+<?php
+
+class QueenAttackUnitTests extends DrupalUnitTestCase {
+    public static function getInfo() {
+        return array(
+            'name' => 'Queen Attack unit tests',
+            'description' => 'Test that determine_line_of_sight works properly',
+            'group' => 'Epicodus Example Tests',
+        );
+    }
+
+    function testDetermineLineOfSight() {
+        $result = determine_line_of_sight(1, 1, 2, 2);
+        $message = 'Queen can attack at diagonal alignment';
+        $this->assertTrue($result, $message);
+
+        $result = determine_line_of_sight(1, 3, 8, 3);
+        $message = 'Queen can attack at horizontal alignment';
+        $this->assertTrue($result, $message);
+
+        $result = determine_line_of_sight(3, 1, 3, 5);
+        $message = 'Queen can attack at vertical alignment';
+        $this->assertTrue($result, $message);
+
+        $result = determine_line_of_sight(1, 1, 2, 3);
+        $message = 'Queen cannot attack when not in line of sight';
+        $this->assertFalse($result, $message);
+    }
+}

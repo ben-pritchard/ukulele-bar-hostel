@@ -3,3 +3,5 @@ description = Two chess board coordinates are entered and after validation check
 package = Epicodus practice modules
 core = 7.x
 files[] = queen_attack.module
+files[] = queen_attack.test
+dependencies[] = simpletest

@@ -1,7 +1,7 @@
 QUESTIONS:
 
 Why does "Answer Page" show up in the Navigation menu even though it's labeled as MENU_CALLBACK in the sum module?
-
+How can I update the Drupal Core version?
 
 
 
