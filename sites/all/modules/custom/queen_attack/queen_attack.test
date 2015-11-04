@@ -1,5 +1,37 @@
 <?php
 
+class QueenAttackFunctionalTests extends DrupalWebTestCase {
+    public static function getInfo() {
+        return array(
+            'name' => 'Queen Attack functional tests',
+            'description' => 'Tests for the Queen Attack module.',
+            'group' => 'Epicodus Example Tests',
+        );
+    }
+
+    public function setUp() {
+        parent::setUp(array('queen_attack'));
+    }
+
+    public function testIntelligenceReport() {
+        $coordinates = array();
+        $coordinates['queen_x'] = 1;
+        $coordinates['queen_y'] = 1;
+        $coordinates['target_x'] = 3;
+        $coordinates['target_y'] = 3;
+        $this->drupalPost('queen_attack', $coordinates, t('Gather intel'));
+        $this->assertText(t('The Queen CAN attack the Target!'));
+
+        $coordinates = array();
+        $coordinates['queen_x'] = 1;
+        $coordinates['queen_y'] = 2;
+        $coordinates['target_x'] = 3;
+        $coordinates['target_y'] = 3;
+        $this->drupalPost('queen_attack', $coordinates, t('Gather intel'));
+        $this->assertText(t('The Queen CANNOT attack the Target!'));
+    }
+}
+
 class QueenAttackUnitTests extends DrupalUnitTestCase {
     public static function getInfo() {
         return array(
