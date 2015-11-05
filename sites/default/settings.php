@@ -220,8 +220,8 @@ $databases = array (
       'database' => 'ukulele_bar_hostel',
       'username' => 'ben-pritchard',
       'password' => 'asdf;lkj911',
-      'host' => '127.0.0.1',
-      'port' => '8889',
+      'host' => 'localhost',
+      'port' => '',
       'driver' => 'mysql',
       'prefix' => '',
     ),
@@ -258,7 +258,7 @@ $update_free_access = FALSE;
  *   $drupal_hash_salt = file_get_contents('/home/example/salt.txt');
  *
  */
-$drupal_hash_salt = 'A_74zdPTNAdPdmcALoyXJbWyteVr4ZgoSczJhXaYjwI';
+$drupal_hash_salt = 'DzZl8jB-nUbmkb3n6wCFADC_rudO7lj88cnHHSRVXIk';
 
 /**
  * Base URL (optional).
